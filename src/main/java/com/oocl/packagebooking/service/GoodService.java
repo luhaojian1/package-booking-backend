@@ -19,4 +19,8 @@ public class GoodService {
     public Good saveGood(Good good) {
         return goodRepository.save(good);
     }
+
+    public List<Good> filterGoodsByGoodStatus(String goodStatus) {
+        return goodRepository.findAllByGoodStatus(goodStatus);
+    }
 }

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -58,6 +59,22 @@ public class GoodControllerTest {
         resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.goodId", is("1")))
         .andExpect(jsonPath("$.customerName",is("盆子")));
     }
+
+    @Test
+    public void should_filter_goods_by_good_status() throws Exception {
+        List<Good> goods = new ArrayList<>();
+        goods.add(createGood("1", "盆子", "1359546","未取件"));
+
+
+        when(goodService.filterGoodsByGoodStatus(anyString())).thenReturn(goods);
+
+        ResultActions resultActions = mvc.perform(get("/goods").param("goodStatus","未取件"));
+
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$",hasSize(1)))
+                .andExpect(jsonPath("$[0].goodId", is("1")))
+                .andExpect(jsonPath("$[0].customerName",is("盆子")));
+    }
+
 
     private Good createGood(String id, String name, String phoneNumber, String status ) {
         Good good = new Good();

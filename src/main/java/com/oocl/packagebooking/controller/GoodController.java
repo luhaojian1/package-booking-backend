@@ -3,10 +3,7 @@ package com.oocl.packagebooking.controller;
 import com.oocl.packagebooking.modle.Good;
 import com.oocl.packagebooking.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,10 @@ public class GoodController {
     @PostMapping("/goods")
     public Good saveGood(@RequestBody Good good){
         return goodService.saveGood(good);
+    }
+
+    @GetMapping(value = "/goods", params = "goodStatus")
+    public List<Good> filterGoodsByGoodStatus(@RequestParam String goodStatus){
+        return goodService.filterGoodsByGoodStatus(goodStatus);
     }
 }
