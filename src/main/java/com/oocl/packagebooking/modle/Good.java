@@ -10,9 +10,11 @@ public class Good {
     //运单号，客户名字，电话，状态，预约时间
     @Id
     private String goodId;
+
     private String customerName;
     private String phoneNumber;
     private String goodStatus;
+    private double weight;
     private long appointmentTime;
 
     public String getGoodId() {
@@ -53,5 +55,25 @@ public class Good {
 
     public void setAppointmentTime(long appointmentTime) {
         this.appointmentTime = appointmentTime;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return "Good{" +
+                "goodId='" + goodId + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", goodStatus='" + goodStatus + '\'' +
+                ", weight=" + weight +
+                ", appointmentTime=" + appointmentTime +
+                '}';
     }
 }

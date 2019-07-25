@@ -18,6 +18,7 @@ public class GoodService {
     }
 
     public Good saveGood(Good good) {
+        good.setGoodStatus("未取件");
         return goodRepository.save(good);
     }
 

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 public class GoodController {
     @Autowired
@@ -19,6 +18,7 @@ public class GoodController {
 
     @PostMapping("/goods")
     public Good saveGood(@RequestBody Good good){
+        System.out.println(good.toString());
         return goodService.saveGood(good);
     }
 
