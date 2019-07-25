@@ -32,4 +32,10 @@ public class GoodController {
         good.setGoodId(goodId);
         return goodService.changeGoodStatus(good);
     }
+
+    @PutMapping(value = "/goods", params = "goodId")
+    public Good reserveGood(@RequestParam String goodId, @RequestBody Good good){
+        good.setGoodId(goodId);
+        return goodService.reserveGood(good);
+    }
 }

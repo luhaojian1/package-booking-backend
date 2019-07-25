@@ -90,6 +90,21 @@ public class GoodControllerTest {
                 .andExpect(jsonPath("$.goodStatus",is("已取件")));
     }
 
+    @Test
+    public void should_reserve_good() throws Exception {
+        Good good =createGood("1", "盆子", "1359546","已取件");
+        good.setAppointmentTime("2019-11-12 09:20:00");
+
+        when(goodService.reserveGood(ArgumentMatchers.any())).thenReturn(good);
+
+        ResultActions resultActions = mvc.perform(put("/goods").param("goodId","123").contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                "       \"appointmentTime\":\"2019\"\n" +
+                "    }"));
+
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.goodId", is("1")))
+                .andExpect(jsonPath("$.appointmentTime",is("2019-11-12 09:20:00")));
+    }
+
     private Good createGood(String id, String name, String phoneNumber, String status ) {
         Good good = new Good();
         good.setGoodId(id);

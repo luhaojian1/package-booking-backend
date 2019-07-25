@@ -27,4 +27,8 @@ public class GoodService {
     public Good changeGoodStatus(Good good) {
         return goodRepository.save(good);
     }
+
+    public Good reserveGood(Good good) {
+        return goodRepository.save(good);
+    }
 }
