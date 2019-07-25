@@ -26,4 +26,10 @@ public class GoodController {
     public List<Good> filterGoodsByGoodStatus(@RequestParam String goodStatus){
         return goodService.filterGoodsByGoodStatus(goodStatus);
     }
+
+    @PutMapping("/goods/{goodId}")
+    public Good changeGoodStatus(@PathVariable String goodId, @RequestBody Good good){
+        good.setGoodId(goodId);
+        return goodService.changeGoodStatus(good);
+    }
 }

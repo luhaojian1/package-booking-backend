@@ -75,13 +75,27 @@ public class GoodControllerTest {
                 .andExpect(jsonPath("$[0].customerName",is("盆子")));
     }
 
+    @Test
+    public void should_change_good_status() throws Exception {
+        Good good =createGood("1", "盆子", "1359546","已取件");
+
+        when(goodService.changeGoodStatus(ArgumentMatchers.any())).thenReturn(good);
+
+        ResultActions resultActions = mvc.perform(put("/goods/{goodId}",good.getGoodId()).contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                "       \"goodStatus\":\"已取件\"\n" +
+                "    }"));
+
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.goodId", is("1")))
+                .andExpect(jsonPath("$.customerName",is("盆子")))
+                .andExpect(jsonPath("$.goodStatus",is("已取件")));
+    }
 
     private Good createGood(String id, String name, String phoneNumber, String status ) {
         Good good = new Good();
         good.setGoodId(id);
         good.setCustomerName(name);
         good.setPhoneNumber(phoneNumber);
-        good.setAppointmentTime(status);
+        good.setGoodStatus(status);
         return good;
     }
 }
