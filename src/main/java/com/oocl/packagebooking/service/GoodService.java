@@ -31,9 +31,12 @@ public class GoodService {
     }
 
     public Good reserveGood(Good good) {
-        if (good.getAppointmentTime() == 0){
+        if (good.getAppointmentTime() == 0) {
             throw new NotWorkingTimeException();
         }
+        Good targetGood = goodRepository.findById(good.getGoodId()).get();
+        targetGood.setGoodStatus("已预约");
+        targetGood.setAppointmentTime(good.getAppointmentTime());
         return goodRepository.save(good);
     }
 }
