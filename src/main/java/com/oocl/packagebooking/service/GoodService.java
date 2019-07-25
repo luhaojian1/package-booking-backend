@@ -1,5 +1,6 @@
 package com.oocl.packagebooking.service;
 
+import com.oocl.packagebooking.exception.NotWorkingTimeException;
 import com.oocl.packagebooking.modle.Good;
 import com.oocl.packagebooking.repository.GoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class GoodService {
     }
 
     public Good reserveGood(Good good) {
+        if (good.getAppointmentTime() == 0){
+            throw new NotWorkingTimeException();
+        }
         return goodRepository.save(good);
     }
 }

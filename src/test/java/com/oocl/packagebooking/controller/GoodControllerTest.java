@@ -1,5 +1,6 @@
 package com.oocl.packagebooking.controller;
 
+import com.oocl.packagebooking.exception.NotWorkingTimeException;
 import com.oocl.packagebooking.modle.Good;
 import com.oocl.packagebooking.service.GoodService;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -92,8 +94,9 @@ public class GoodControllerTest {
 
     @Test
     public void should_reserve_good() throws Exception {
-        Good good =createGood("1", "盆子", "1359546","已取件");
-        good.setAppointmentTime("2019-11-12 09:20:00");
+        Good good =createGood("1", "盆子", "1359546","未取件");
+        long appointmentTime = System.currentTimeMillis();
+        good.setAppointmentTime(appointmentTime);
 
         when(goodService.reserveGood(ArgumentMatchers.any())).thenReturn(good);
 
@@ -102,8 +105,23 @@ public class GoodControllerTest {
                 "    }"));
 
         resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.goodId", is("1")))
-                .andExpect(jsonPath("$.appointmentTime",is("2019-11-12 09:20:00")));
+                .andExpect(jsonPath("$.appointmentTime",is(appointmentTime)));
     }
+
+    @Test
+    public void should_throw_not_working_time_exception_when_reserve_good_in_break_time() throws Exception {
+
+        when(goodService.reserveGood(ArgumentMatchers.any())).thenThrow(NotWorkingTimeException.class);
+
+        ResultActions resultActions = mvc.perform(put("/goods").param("goodId","123").contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                "       \"appointmentTime\":\"2019\"\n" +
+                "    }"));
+
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+
+
 
     private Good createGood(String id, String name, String phoneNumber, String status ) {
         Good good = new Good();
@@ -113,4 +131,6 @@ public class GoodControllerTest {
         good.setGoodStatus(status);
         return good;
     }
+
+
 }

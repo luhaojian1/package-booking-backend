@@ -13,7 +13,7 @@ public class Good {
     private String customerName;
     private String phoneNumber;
     private String goodStatus;
-    private String appointmentTime;
+    private long appointmentTime;
 
     public String getGoodId() {
         return goodId;
@@ -47,11 +47,11 @@ public class Good {
         this.goodStatus = goodStatus;
     }
 
-    public String getAppointmentTime() {
+    public long getAppointmentTime() {
         return appointmentTime;
     }
 
-    public void setAppointmentTime(String appointmentTime) {
+    public void setAppointmentTime(long appointmentTime) {
         this.appointmentTime = appointmentTime;
     }
 }
