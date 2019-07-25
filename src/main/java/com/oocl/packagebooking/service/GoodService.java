@@ -15,4 +15,8 @@ public class GoodService {
     public List<Good> findAll() {
         return goodRepository.findAll();
     }
+
+    public Good saveGood(Good good) {
+        return goodRepository.save(good);
+    }
 }
