@@ -10,7 +10,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotWorkingTimeException.class)
-    public ResponseEntity handlerNotWorkingTimeExpection(){
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity<String> handlerNotWorkingTimeExpection() {
+        return new ResponseEntity<>("not in working time", HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(GoodTakeAwayException.class)
+    public ResponseEntity handlerGoodTakeAwayException() {
+        return new ResponseEntity<>("good has been take away", HttpStatus.BAD_REQUEST);
     }
 }

@@ -123,9 +123,20 @@ public class GoodControllerTest {
 
     @Test
     public void getTime() {
-        Calendar date = Calendar.getInstance();
-        date.getTimeZone();
+        Date date = new Date();
+        Calendar cale = Calendar.getInstance();
+        int year = cale.get(Calendar.YEAR);
+        int month = cale.get(Calendar.MONTH);
+        int day = cale.get(Calendar.DATE);
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(year, month, day, 9, 0, 0);
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(year, month, day, 20, 0, 0);
         System.out.println(date.getTime());
+        System.out.println(cale.getTime());
+        System.out.println(startTime.getTime());
+        System.out.println(endTime.getTime());
+        System.out.println(year + "-" + month + "-" + day);
     }
 
 
@@ -135,6 +146,7 @@ public class GoodControllerTest {
         good.setCustomerName(name);
         good.setPhoneNumber(phoneNumber);
         good.setGoodStatus(status);
+
         return good;
     }
 
